@@ -18,7 +18,7 @@ const createTables = async () => {
 
   );`);
 
-  await Promsise.all([townsTablePromise, usersTablePromise]);
+  await Promise.all([townsTablePromise, usersTablePromise]);
 
   await db.query(`
   CREATE TABLE parks (
