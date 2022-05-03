@@ -14,7 +14,7 @@ const createTables = async () => {
     user_id SERIAL PRIMARY KEY,
     username VARCHAR NOT NULL,
     email VARCHAR NOT NULL,
-    password PASSWORD,
+    password VARCHAR
 
   );`);
 
@@ -54,11 +54,11 @@ const createTables = async () => {
 };
 
 const dropTables = async () => {
-  await db.query(`DROP TABLE IF EXISTS towns`);
-  await db.query(`DROP TABLE IF EXISTS users`);
-  await db.query(`DROP TABLE IF EXISTS parks`);
   await db.query(`DROP TABLE IF EXISTS maps`);
+  await db.query(`DROP TABLE IF EXISTS parks`);
   await db.query(`DROP TABLE IF EXISTS user_activity`);
+  await db.query(`DROP TABLE IF EXISTS users`);
+  await db.query(`DROP TABLE IF EXISTS towns`);
 };
 
 module.exports = { createTables, dropTables };

@@ -1,4 +1,4 @@
-module.export = [
+module.exports = [
   {
     park_id: 1,
     length: 3.7,

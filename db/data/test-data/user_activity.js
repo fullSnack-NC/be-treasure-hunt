@@ -1,4 +1,4 @@
-module.export = [
+module.exports = [
   {
     user_id: 1,
     badges: ["Rothwell Park"],

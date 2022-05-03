@@ -11,5 +11,5 @@ afterAll(() => {
 beforeEach(() => seed(testData));
 
 test("should first", () => {
-  second;
+  console.log("testing");
 });

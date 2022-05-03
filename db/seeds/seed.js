@@ -1,4 +1,4 @@
-const format = "pg-format";
+const format = require("pg-format");
 const { createRef } = require("../helpers/utils");
 const db = require("../connection");
 const { dropTables, createTables } = require("../helpers/manage-tables");
@@ -39,27 +39,29 @@ const seed = async ({
 
   const usersPromise = db
     .query(insertUsersQueryStr)
-    .then((result) => results.rows);
+    .then((results) => results.rows);
 
   await Promise.all([townsPromise, usersPromise]);
 
-  const insertParksQueryStr = format(
-    `
-    INSERT INTO parks (town_id, park_name, parks_lat, parks_long, amenities)
-    VALUES %L RETURNING *;
-    `,
-    parksData.map(
-      ({ town_id, park_name, parks_lat, parks_long, amenities }) => [
-        town_id,
-        park_name,
-        parks_lat,
-        parks_long,
-        amenities,
-      ]
-    )
-  );
+  //   const insertParksQueryStr = format(
+  //     `
+  //     INSERT INTO parks (town_id, park_name, parks_lat, parks_long, amenities)
+  //     VALUES %L RETURNING *;
+  //     `,
+  //     parksData.map(
+  //       ({ town_id, park_name, parks_lat, parks_long, amenities }) => [
+  //         town_id,
+  //         park_name,
+  //         parks_lat,
+  //         parks_long,
+  //         amenities,
+  //       ]
+  //     )
+  //   );
 
-  const parksRows = await db
-    .query(insertParksQueryStr)
-    .then((results) => results.rows);
+  //   const parksRows = await db
+  //     .query(insertParksQueryStr)
+  //     .then((results) => results.rows);
 };
+
+module.exports = seed;

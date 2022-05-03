@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "test": "NODE_ENV=test jest",
     "setup-dbs": "psql -f ./db/setup.sql",
     "seed": "node ./db/seeds/run-seed.js",
-    "seed:prod": "NODE_env=production DATABASE_URL=npm run seed",
+    "seed:prod": "NODE_ENV=production DATABASE_URL=npm run seed",
     "start": "node listen.js"
   },
   "repository": {
