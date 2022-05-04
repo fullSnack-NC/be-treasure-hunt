@@ -1,7 +1,7 @@
-const db = require("../connection");
+const db = require('../connection');
 
 const createTables = async () => {
-  const townsTablePromise = db.query(`
+	const townsTablePromise = db.query(`
   CREATE TABLE towns (
     town_id SERIAL PRIMARY KEY,
     town_name VARCHAR NOT NULL,
@@ -9,7 +9,7 @@ const createTables = async () => {
 
   );`);
 
-  const usersTablePromise = db.query(`
+	const usersTablePromise = db.query(`
   CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR NOT NULL,
@@ -18,9 +18,9 @@ const createTables = async () => {
 
   );`);
 
-  await Promise.all([townsTablePromise, usersTablePromise]);
+	await Promise.all([townsTablePromise, usersTablePromise]);
 
-  await db.query(`
+	const parksTablePromise = db.query(`
   CREATE TABLE parks (
     park_id SERIAL PRIMARY KEY,
     town_id INT NOT NULL REFERENCES towns(town_id),
@@ -30,9 +30,11 @@ const createTables = async () => {
     amenities VARCHAR NOT NULL
   );`);
 
-  //Count for total ammount of hunts on parks
+	await Promise.all([parksTablePromise]);
 
-  await db.query(`
+	//Count for total ammount of hunts on parks
+
+	const mapsTablePromise = db.query(`
   CREATE TABLE maps (
     map_id SERIAL PRIMARY KEY,
     park_id INT NOT NULL REFERENCES parks(park_id),
@@ -41,9 +43,22 @@ const createTables = async () => {
     age_min INT NOT NULL
   );`);
 
-  //Count for total ammount of waypoints on maps
+	await Promise.all([mapsTablePromise]);
 
-  await db.query(`
+	//Count for total ammount of waypoints on maps
+
+	await db.query(`
+  CREATE TABLE waypoints (
+    waypoint_id SERIAL PRIMARY KEY,
+    map_id INT NOT NULL REFERENCES maps(map_id),
+    waypoint_lat DECIMAL NOT NULL,
+    waypoint_long DECIMAL NOT NULL,
+    waypoint_timestamp TIMESTAMP NOT NULL,
+    waypoint_ele DECIMAL,
+    image VARCHAR
+  );`);
+
+	await db.query(`
   CREATE TABLE user_activity (
     activity_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL REFERENCES users(user_id),
@@ -54,11 +69,12 @@ const createTables = async () => {
 };
 
 const dropTables = async () => {
-  await db.query(`DROP TABLE IF EXISTS maps`);
-  await db.query(`DROP TABLE IF EXISTS parks`);
-  await db.query(`DROP TABLE IF EXISTS user_activity`);
-  await db.query(`DROP TABLE IF EXISTS users`);
-  await db.query(`DROP TABLE IF EXISTS towns`);
+	await db.query(`DROP TABLE IF EXISTS waypoints`);
+	await db.query(`DROP TABLE IF EXISTS maps`);
+	await db.query(`DROP TABLE IF EXISTS parks`);
+	await db.query(`DROP TABLE IF EXISTS user_activity`);
+	await db.query(`DROP TABLE IF EXISTS users`);
+	await db.query(`DROP TABLE IF EXISTS towns`);
 };
 
 module.exports = { createTables, dropTables };
