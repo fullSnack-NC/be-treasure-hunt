@@ -4,6 +4,7 @@ const {
   formatParks,
   formatMaps,
   formatWaypoints,
+  formatUserActivity,
 } = require("../helpers/utils");
 const db = require("../connection");
 const { dropTables, createTables } = require("../helpers/manage-tables");
@@ -31,11 +32,17 @@ const seed = async ({
     ])
   );
 
-  const usersPromise = db
+  const usersRows = await db
     .query(insertUsersQueryStr)
     .then((results) => results.rows);
 
-  await Promise.all([usersPromise]);
+  const userIdLookup = createRef(userRows, "username", "user_id");
+  const formattedUserActivity = formatUserActivity(
+    user_activityData,
+    userIdLookup
+  );
+
+  const insertUserActivityStr = format();
 
   const insertTownsQueryStr = format(
     `

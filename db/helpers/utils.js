@@ -34,3 +34,13 @@ exports.formatWaypoints = (waypoints, idLookup) => {
     };
   });
 };
+
+exports.formatUserActivity = (user_activity, idLookup) => {
+  return user_activity.map(({ user, ...restOfActivity }) => {
+    const user_id = idLookup[user];
+    return {
+      user_id,
+      ...restOfActivity,
+    };
+  });
+};
