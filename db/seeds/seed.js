@@ -36,13 +36,33 @@ const seed = async ({
     .query(insertUsersQueryStr)
     .then((results) => results.rows);
 
-  const userIdLookup = createRef(userRows, "username", "user_id");
+  const userIdLookup = createRef(usersRows, "username", "user_id");
   const formattedUserActivity = formatUserActivity(
     user_activityData,
     userIdLookup
   );
 
-  const insertUserActivityStr = format();
+  const insertUserActivityStr = format(
+    `
+      INSERT INTO user_activity (user_id, badges, maps_attempted, maps_completed)
+      VALUES %L RETURNING *;
+      `,
+    formattedUserActivity.map(
+      ({ user_id, badges, maps_attempted, maps_completed }) => [
+        user_id,
+        badges,
+        maps_attempted,
+        maps_completed,
+      ]
+    )
+  );
+  const userActivityPromise = db
+    .query(insertUserActivityStr)
+    .then((results) => {
+      console.log(results.rows, "<<<<");
+      return results.rows;
+    });
+  await Promise.all([userActivityPromise]);
 
   const insertTownsQueryStr = format(
     `
@@ -123,7 +143,6 @@ const seed = async ({
     )
   );
   return db.query(insertWaypointsQueryStr).then((results) => {
-    console.log(results.rows, "<<<<");
     return results.rows;
   });
 };
