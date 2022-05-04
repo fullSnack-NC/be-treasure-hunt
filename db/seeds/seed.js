@@ -80,15 +80,18 @@ const seed = async ({
 
   const insertParksQueryStr = format(
     `
-		    INSERT INTO parks (town_id, park_name, parks_lat, parks_long)
+		    INSERT INTO parks (town_id, park_name, parks_lat, parks_long, amenities)
 		    VALUES %L RETURNING *;
 		    `,
-    formattedParks.map(({ town_id, park_name, parks_lat, parks_long }) => [
-      town_id,
-      park_name,
-      parks_lat,
-      parks_long,
-    ])
+    formattedParks.map(
+      ({ town_id, park_name, parks_lat, parks_long, amenities }) => [
+        town_id,
+        park_name,
+        parks_lat,
+        parks_long,
+        amenities,
+      ]
+    )
   );
   const parksRows = await db.query(insertParksQueryStr).then((result) => {
     return result.rows;
