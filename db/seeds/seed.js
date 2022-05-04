@@ -36,13 +36,33 @@ const seed = async ({
     .query(insertUsersQueryStr)
     .then((results) => results.rows);
 
-  const userIdLookup = createRef(userRows, "username", "user_id");
+  const userIdLookup = createRef(usersRows, "username", "user_id");
   const formattedUserActivity = formatUserActivity(
     user_activityData,
     userIdLookup
   );
 
-  const insertUserActivityStr = format();
+  const insertUserActivityStr = format(
+    `
+      INSERT INTO user_activity (user_id, badges, maps_attempted, maps_completed)
+      VALUES %L RETURNING *;
+      `,
+    formattedUserActivity.map(
+      ({ user_id, badges, maps_attempted, maps_completed }) => [
+        user_id,
+        badges,
+        maps_attempted,
+        maps_completed,
+      ]
+    )
+  );
+  const userActivityPromise = db
+    .query(insertUserActivityStr)
+    .then((results) => {
+      console.log(results.rows, "<<<<");
+      return results.rows;
+    });
+  await Promise.all([userActivityPromise]);
 
   const insertTownsQueryStr = format(
     `
@@ -60,15 +80,18 @@ const seed = async ({
 
   const insertParksQueryStr = format(
     `
-		    INSERT INTO parks (town_id, park_name, parks_lat, parks_long)
+		    INSERT INTO parks (town_id, park_name, parks_lat, parks_long, amenities)
 		    VALUES %L RETURNING *;
 		    `,
-    formattedParks.map(({ town_id, park_name, parks_lat, parks_long }) => [
-      town_id,
-      park_name,
-      parks_lat,
-      parks_long,
-    ])
+    formattedParks.map(
+      ({ town_id, park_name, parks_lat, parks_long, amenities }) => [
+        town_id,
+        park_name,
+        parks_lat,
+        parks_long,
+        amenities,
+      ]
+    )
   );
   const parksRows = await db.query(insertParksQueryStr).then((result) => {
     return result.rows;
@@ -123,7 +146,6 @@ const seed = async ({
     )
   );
   return db.query(insertWaypointsQueryStr).then((results) => {
-    console.log(results.rows, "<<<<");
     return results.rows;
   });
 };

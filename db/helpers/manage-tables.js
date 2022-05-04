@@ -26,7 +26,8 @@ const createTables = async () => {
     town_id INT REFERENCES towns(town_id),
     park_name VARCHAR,
     parks_lat DECIMAL,
-    parks_long DECIMAL
+    parks_long DECIMAL,
+    amenities VARCHAR
   );`);
 
   await Promise.all([parksTablePromise]);
