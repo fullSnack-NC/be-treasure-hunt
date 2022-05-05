@@ -3,6 +3,6 @@ const express = require("express");
 const format = require("pg-format");
 const { getMapsParkById } = require("../controllers/maps.controller");
 
-mapsRouter.route(`/maps/:park_id/maps`).get(getMapsParkById);
+mapsRouter.route(`/:park_id`).get(getMapsParkById);
 
 module.exports = mapsRouter;

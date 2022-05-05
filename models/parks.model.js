@@ -9,7 +9,7 @@ exports.selectParks = async () => {
 };
 
 exports.selectParksById = async (park_id) => {
-  const parkById = await db.query(`SELECT * FROM parks WHERE park_id =$1`, [
+  const parkById = await db.query(`SELECT * FROM parks WHERE park_id =$1;`, [
     park_id,
   ]);
   return parkById.rows[0];
