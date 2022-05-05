@@ -60,7 +60,7 @@ describe("ERROR HANDLING api/parks/:park_id", () => {
 
 describe("GET api/parks/:park_id/maps", () => {
   test("status:200, responds with maps park_id", async () => {
-    const res = await request(app).get("/api/parks/1/maps").expect(200);
+    const res = await request(app).get(`/api/maps/1/maps`).expect(200);
     expect(res.body.parks).toBeInstanceOf(Object);
   });
 });
