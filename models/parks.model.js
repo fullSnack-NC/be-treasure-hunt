@@ -13,6 +13,5 @@ exports.selectParksById = async (park_id) => {
     park_id,
   ]);
 
-  console.log(parkById.rows);
   return parkById.rows[0];
 };
