@@ -10,12 +10,12 @@ afterAll(() => {
 
 beforeEach(() => seed(testData));
 
-describe('GET /api/:town_id/parks');
+// describe('GET /api/:town_id/parks');
 test('200 blah blah blah ', () => {
 	console.log('testing');
 });
 
-describe('ERROR HANDLING /api/:town_id/parks');
+// describe('ERROR HANDLING /api/:town_id/parks');
 test('404 blah blah blah ', () => {
 	console.log('testing');
 });
