@@ -16,4 +16,5 @@ app.all("/*", (req, res) => {
 app.use(psqlErrors);
 app.use(nonPsqlErrors);
 app.use(internalServerError);
+
 module.exports = app;

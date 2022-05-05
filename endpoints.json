@@ -1,1 +1,26 @@
-{}
+{
+  "GET /api": {
+    "description": "serves up a json representation of all the available endpoints of the api"
+  },
+
+  "GET /api/parks": {
+    "description": "serves an array of all parks",
+    "exampleResponse": {
+      "parks": [
+        {
+          "town_id": 4,
+          "park_name": "Roundhay Park",
+          "parks_lat": 53.83767,
+          "parks_long": -1.495378,
+          "amenities": {
+            "wildlife": true,
+            "lake": true,
+            "toilets": true,
+            "food": true,
+            "accessible": false
+          }
+        }
+      ]
+    }
+  }
+}
