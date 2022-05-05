@@ -1,6 +1,6 @@
 const { selectMapsByParkId } = require("../models/maps.model");
 
-exports.getMapsByParkById = (req, res, next) => {
+exports.getMapsParkById = (req, res, next) => {
   const { park_id } = req.params;
   console.log(park_id);
   selectMapsByParkId(park_id)

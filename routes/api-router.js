@@ -1,6 +1,6 @@
 const apiRouter = require("express").Router();
 const { getApi } = require("../controllers/api.controllers");
-const mapsRouter = require("./maps-router");
+const mapsRouter = require("./maps-router.js");
 const parksRouter = require("./parks-router.js");
 
 apiRouter.get("/", getApi);

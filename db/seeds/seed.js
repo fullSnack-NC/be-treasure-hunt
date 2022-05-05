@@ -115,7 +115,7 @@ const seed = async ({
     )
   );
   const mapRows = await db.query(insertMapsQueryStr).then((results) => {
-    console.log(results.rows);
+    // console.log(results.rows);
     return results.rows;
   });
 
