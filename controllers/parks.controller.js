@@ -1,4 +1,4 @@
-const { selectParks } = require('../models/parks.model');
+const { selectParks, selectParksById } = require('../models/parks.model');
 
 exports.getParks = (req, res, next) => {
 	selectParks()
