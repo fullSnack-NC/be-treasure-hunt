@@ -1,66 +1,87 @@
-const db = require("../db/connection");
-const seed = require("../db/seeds/seed");
-const testData = require("../db/data/test-data");
-const app = require("../app");
-const request = require("supertest");
+const db = require('../db/connection');
+const seed = require('../db/seeds/seed');
+const testData = require('../db/data/test-data');
+const app = require('../app');
+const request = require('supertest');
 
 afterAll(() => {
-  db.end();
+	db.end();
 });
 
 beforeEach(() => seed(testData));
 
-describe("GET api/parks", () => {
-  test("status:200, responds with all parks", async () => {
-    const res = await request(app).get("/api/parks").expect(200);
+describe('GET api/parks', () => {
+	test('status:200, responds with all parks', async () => {
+		const res = await request(app).get('/api/parks').expect(200);
 
-    expect(res.body.parks).toBeInstanceOf(Object);
-    res.body.parks.forEach((park) => {
-      expect(park).toMatchObject({
-        park_id: expect.any(Number),
-        town_id: expect.any(Number),
-        park_name: expect.any(String),
-        parks_lat: expect.any(String),
-        parks_long: expect.any(String),
-        amenities: expect.any(String),
-      });
-    });
-  });
+		expect(res.body.parks).toBeInstanceOf(Object);
+		res.body.parks.forEach((park) => {
+			expect(park).toMatchObject({
+				park_id: expect.any(Number),
+				town_id: expect.any(Number),
+				park_name: expect.any(String),
+				parks_lat: expect.any(String),
+				parks_long: expect.any(String),
+				amenities: expect.any(String),
+			});
+		});
+	});
 });
 
-describe("ERROR HANDLING api/parks", () => {
-  test("status:400, responds with bad request message when wrong api is passes ", async () => {
-    const res = await request(app).get("/api/10").expect(404);
-    expect(res.body.msg).toEqual("Path not found");
-  });
+describe('ERROR HANDLING api/parks', () => {
+	test('status:400, responds with bad request message when wrong api is passes ', async () => {
+		const res = await request(app).get('/api/10').expect(404);
+		expect(res.body.msg).toEqual('Path not found');
+	});
 });
 
-describe("GET api/parks/:park_id", () => {
-  test("status:200, responds with 1 park by park_id", async () => {
-    const res = await request(app).get("/api/parks/2").expect(200);
-    expect(res.body.parks).toBeInstanceOf(Object);
-    expect(res.body.parks).toEqual({
-      park_id: 2,
-      town_id: 2,
-      park_name: "Rothwell Park",
-      parks_lat: "53.76074",
-      parks_long: "1.472666",
-      amenities:
-        '{"food": true, "lake": true, "toilets": true, "wildlife": true, "accessible": true}',
-    });
-  });
+describe('GET api/parks/:park_id', () => {
+	test('status:200, responds with 1 park by park_id', async () => {
+		const res = await request(app).get('/api/parks/2').expect(200);
+		expect(res.body.parks).toBeInstanceOf(Object);
+		expect(res.body.parks).toEqual({
+			park_id: 2,
+			town_id: 2,
+			park_name: 'Rothwell Park',
+			parks_lat: '53.76074',
+			parks_long: '1.472666',
+			amenities:
+				'{"food": true, "lake": true, "toilets": true, "wildlife": true, "accessible": true}',
+		});
+	});
 });
 
-describe("ERROR HANDLING api/parks/:park_id", () => {
-  test("status:400, responds with bad request message when wrong api is passed", async () => {
-    const res = await request(app).get("/api/parks/VillaPark").expect(400);
-    expect(res.body.msg).toEqual("Bad request");
-  });
+describe('ERROR HANDLING api/parks/:park_id', () => {
+	test('status:400, responds with bad request message when wrong api is passed', async () => {
+		const res = await request(app).get('/api/parks/VillaPark').expect(400);
+		expect(res.body.msg).toEqual('Bad request');
+	});
 });
 
-describe("GET api/parks/:park_id/maps", () => {
-  test("status:200, responds with maps park_id", async () => {
-    const res = await request(app).get(`/api/maps/1`).expect(200);
-    expect(res.body.maps).toBeInstanceOf(Object);
-  });
+describe('GET api/maps/:park_id', () => {
+	test('status:200, responds with maps park_id', async () => {
+		const res = await request(app).get(`/api/maps/1`).expect(200);
+		expect(res.body.maps).toBeInstanceOf(Object);
+		res.body.maps.forEach((map) => {
+			expect(map).toMatchObject({
+				map_id: expect.any(Number),
+				park_id: expect.any(Number),
+				map_name: expect.any(String),
+				length: expect.any(String),
+				est_comp_time: expect.any(Number),
+				age_min: expect.any(Number),
+			});
+		});
+	});
+});
+
+describe('ERROR HANDLING api/maps/:park_id', () => {
+	test('status:400, responds with bad request message when wrong api is passed', async () => {
+		const res = await request(app).get('/api/maps/notnumber').expect(400);
+		expect(res.body.msg).toEqual('Bad request');
+	});
+	test('status:404, responds with not found message for correct format but map not found', async () => {
+		const res = await request(app).get('/api/maps/1000').expect(404);
+		expect(res.body.msg).toEqual('Park not found');
+	});
 });
