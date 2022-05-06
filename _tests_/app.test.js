@@ -85,3 +85,78 @@ describe('ERROR HANDLING api/maps/:park_id', () => {
 		expect(res.body.msg).toEqual('Park not found');
 	});
 });
+
+describe('PATCH api/user_activity/:user_id', () => {
+	test('status:200, responds with updated object for useractivity', async () => {
+		const updatedUA = {
+			user_id: 1,
+			badges: { 1: 'Rothwell Park', 2: 'Roundhay' },
+			maps_attempted: 2,
+			maps_completed: 2,
+		};
+
+		const res = await request(app)
+			.patch(`/api/user_activity/1`)
+			.send(updatedUA)
+			.expect(200);
+		expect(res.body.user).toBeInstanceOf(Array);
+		expect(res.body.user).toEqual([
+			{
+				activity_id: 1,
+				user_id: 1,
+				badges: '{"1":"Rothwell Park","2":"Roundhay"}',
+				maps_attempted: 2,
+				maps_completed: 2,
+			},
+		]);
+	});
+});
+
+describe('ERROR HANDLING-PATCH /api/user_activity/:user_id', () => {
+	test('422: Responds with Unprocessable Entity message for invalid update', async () => {
+		const updatedUA = {
+			user_id: 1,
+			badges: { 1: 'Rothwell Park', 2: 'Roundhay' },
+			maps_attempted: 'two',
+			maps_completed: 'two',
+		};
+		const res = await request(app)
+			.patch('/api/user_activity/1')
+			.send(updatedUA)
+			.expect(422);
+		expect(res.body).toMatchObject({
+			msg: 'Unprocessable Entity- Please provide correct format',
+		});
+	});
+	test('404: Responds with message for valid but not recognised user ID', async () => {
+		const updatedUA = {
+			user_id: 1,
+			badges: { 1: 'Rothwell Park', 2: 'Roundhay' },
+			maps_attempted: 2,
+			maps_completed: 2,
+		};
+
+		const res = await request(app)
+			.patch('/api/user_activity/1000')
+			.send(updatedUA)
+			.expect(404)
+			.then((res) => {
+				expect(res.body).toMatchObject({ msg: 'User not found' });
+			});
+	});
+	test('400: Responds with bad request message for invalid format', async () => {
+		const updatedUA = {
+			user_id: 1,
+			badges: { 1: 'Rothwell Park', 2: 'Roundhay' },
+			maps_attempted: 2,
+			maps_completed: 2,
+		};
+		const res = await request(app)
+			.patch('/api/user_activity/two')
+			.send(updatedUA)
+			.expect(400)
+			.then((res) => {
+				expect(res.body).toMatchObject({ msg: 'Bad request' });
+			});
+	});
+});
