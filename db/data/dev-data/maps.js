@@ -35,18 +35,22 @@ module.exports = [
     image:
       'https://drive.google.com/file/d/14LPTJbxi_GwTK15bA0BVYmtLHqweGNx-/view?usp=sharing',
   },
-	{
-		park_id: 1,
-		map_name: 'Roundhay Explorer',
-		length: 4.2,
-		est_comp_time: 50,
-		age_min: 7,
-	},
-	{
-		park_id: 1,
-		map_name: 'Waterloo Lake',
-		length: 2.7,
-		est_comp_time: 44,
-		age_min: 5,
-	},
+  {
+    park_id: 1,
+    map_name: 'Roundhay Explorer',
+    length: 4.2,
+    est_comp_time: 50,
+    age_min: 7,
+    image:
+      'https://drive.google.com/file/d/1iljSCa2tfczRlHzPPFL4zGy0JArduVh6/view?usp=sharing',
+  },
+  {
+    park_id: 1,
+    map_name: 'Waterloo Lake',
+    length: 2.7,
+    est_comp_time: 44,
+    age_min: 5,
+    image:
+      'https://drive.google.com/file/d/1cF6fyKNKLNu56bCUaeh36dRGJs9-nhRB/view?usp=sharing',
+  },
 ];
