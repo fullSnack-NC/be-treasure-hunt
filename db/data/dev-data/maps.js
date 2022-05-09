@@ -14,6 +14,8 @@ module.exports = [
     length: 4.2,
     est_comp_time: 51,
     age_min: 6,
+    image:
+      'https://drive.google.com/file/d/1-GteYo0yfVhVt-YvduFHoddGJ8IamI91/view?usp=sharing',
   },
   {
     park_id: 2,
@@ -21,6 +23,8 @@ module.exports = [
     length: 1.2,
     est_comp_time: 30,
     age_min: 3,
+    image:
+      'https://drive.google.com/file/d/17PqswZ7cL2kTnMviA9VEiNFn1rzxjdyj/view?usp=sharing',
   },
   {
     park_id: 3,
@@ -28,5 +32,7 @@ module.exports = [
     length: 5,
     est_comp_time: 75,
     age_min: 7,
+    image:
+      'https://drive.google.com/file/d/14LPTJbxi_GwTK15bA0BVYmtLHqweGNx-/view?usp=sharing',
   },
 ];
