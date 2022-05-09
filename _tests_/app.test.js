@@ -15,6 +15,7 @@ describe('GET api/parks', () => {
     const res = await request(app).get('/api/parks').expect(200);
 
     expect(res.body.parks).toBeInstanceOf(Object);
+    expect(res.body.parks.length).toBe(3);
     res.body.parks.forEach((park) => {
       expect(park).toMatchObject({
         park_id: expect.any(Number),
@@ -29,7 +30,7 @@ describe('GET api/parks', () => {
 });
 
 describe('ERROR HANDLING api/parks', () => {
-  test('status:400, responds with bad request message when wrong api is passes ', async () => {
+  test('status:400, responds with bad request message when wrong API is passed ', async () => {
     const res = await request(app).get('/api/10').expect(404);
     expect(res.body.msg).toEqual('Path not found');
   });
@@ -87,7 +88,7 @@ describe('ERROR HANDLING api/maps/:park_id', () => {
 });
 
 describe('PATCH api/user_activity/:user_id', () => {
-  test('status:200, responds with updated object for useractivity', async () => {
+  test('status:200, responds with updated object for user_activity', async () => {
     const updatedUA = {
       user_id: 1,
       badges: { 1: 'Rothwell Park', 2: 'Roundhay' },
