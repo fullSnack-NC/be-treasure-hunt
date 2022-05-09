@@ -11,14 +11,14 @@ Please start by cloning this repo.
 
 # ----Set up infomation----
 
-- Run `NPM install`. This will download dependencies from package.JSON.
-- Run `NPM setup-dbs`. This will initialise the data base ready to be populated
-- Run `NPM seed`. This will seed the newly set up database with values and data.
-- Run `NPM test`. This is will enable testing suite to run.
+- Run `npm install`. This will download dependencies from package.JSON.
+- Run `npm run setup-dbs`. This will initialise the database ready to be populated
+- Run `npm run seed`. This will seed the newly set up database with values and data.
+- Run `npm run test`. This is will enable testing suite to run.
 
 # ----Dependencies used----
 
-These will be insatlled from package.JSON, but are here in list form for reference:
+These will be installed from package.JSON, but are here in list form for reference:
 
 - postgres 🐘
 - husky 🌭
@@ -28,7 +28,6 @@ These will be insatlled from package.JSON, but are here in list form for referen
 - pg-format 🤖
 - supertest 🦸‍♀️
 - dotenv 🌳
-- fs 🗄️
 
 # ----Minimum Versions ----
 
@@ -43,4 +42,5 @@ Please run with a minimum of the following version types:
 
 Please create enviroment variables to be able to clone and locally run this file succesfully. Please create the following files and double check they are succesfully in git ignore:
 
-- `.env.test` - In the body of this file please add PGDATABASE=be_treasure_hunt_test -`.env.development` - In the body of this file please add PGDATABASE=be_treasure_hunt
+- `.env.test` - In the body of this file please add PGDATABASE=be_treasure_hunt_test
+- `.env.development` - In the body of this file please add PGDATABASE=be_treasure_hunt
