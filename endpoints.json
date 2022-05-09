@@ -1,0 +1,88 @@
+{
+	"GET /api": {
+		"description": "serves up a json representation of all the available endpoints of the api"
+	},
+
+	"GET /api/parks": {
+		"description": "serves an array of all parks",
+		"exampleResponse": {
+			"parks": [
+				{
+					"park_id": 1,
+					"town_id": 4,
+					"park_name": "Roundhay Park",
+					"parks_lat": 53.83767,
+					"parks_long": -1.495378,
+					"amenities": {
+						"wildlife": true,
+						"lake": true,
+						"toilets": true,
+						"food": true,
+						"accessible": false
+					}
+				}
+			]
+		}
+	},
+	"GET /api/parks/:park_id": {
+		"description": "serves an array a single park by park_id passed",
+		"queries": ["park_id"],
+		"exampleResponse": {
+			"parks": [
+				{
+					"park_id": 1,
+					"town_id": 4,
+					"park_name": "Roundhay Park",
+					"parks_lat": 53.83767,
+					"parks_long": -1.495378,
+					"amenities": {
+						"wildlife": true,
+						"lake": true,
+						"toilets": true,
+						"food": true,
+						"accessible": false
+					}
+				}
+			]
+		}
+	},
+	"GET /api/maps/:park_id": {
+		"description": "serves an array of maps by park_id passed",
+		"queries": ["park_id"],
+		"exampleResponse": {
+			"maps": [
+				{
+					"map_id": 2,
+					"park_id": 2,
+					"map_name": "Rothwell Loop",
+					"length": 4.2,
+					"est_comp_time": 51,
+					"age_min": 6
+				},
+				{
+					"map_id": 3,
+					"park_id": 2,
+					"map_name": "Rothwell Extreme",
+					"length": 1.2,
+					"est_comp_time": 30,
+					"age_min": 3
+				}
+			]
+		}
+	},
+	"PATCH /api/users_activity/:user_id": {
+		"description": "serves an array of an updated user_activity input by user id",
+		"queries": ["user_id"],
+		"exampleResponse": {
+			"user": [
+				{
+					"activity_id": 1,
+					"user_id": 1,
+					"badges": { "1": "Rothwell Park", "2": "Roundhay" },
+					"maps_attempted": 2,
+					"maps_completed": 2
+				}
+			]
+		}
+	}
+}

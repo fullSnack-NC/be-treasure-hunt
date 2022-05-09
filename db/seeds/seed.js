@@ -59,7 +59,6 @@ const seed = async ({
   const userActivityPromise = db
     .query(insertUserActivityStr)
     .then((results) => {
-      console.log(results.rows, "<<<<");
       return results.rows;
     });
   await Promise.all([userActivityPromise]);
@@ -116,6 +115,7 @@ const seed = async ({
     )
   );
   const mapRows = await db.query(insertMapsQueryStr).then((results) => {
+    // console.log(results.rows);
     return results.rows;
   });
 
