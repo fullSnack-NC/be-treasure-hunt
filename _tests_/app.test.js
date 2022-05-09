@@ -48,6 +48,8 @@ describe('GET api/parks/:park_id', () => {
       parks_long: '1.472666',
       amenities:
         '{"food": true, "lake": true, "toilets": true, "wildlife": true, "accessible": true}',
+      image:
+        'https://drive.google.com/file/d/1R-0fPCTykXge0CH-xnExRn9pKsXq0m5Y/view?usp=sharing',
     });
   });
 });

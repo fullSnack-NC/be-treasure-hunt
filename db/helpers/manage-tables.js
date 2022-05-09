@@ -58,7 +58,7 @@ const createTables = async () => {
     waypoint_long DECIMAL NOT NULL,
     waypoint_timestamp VARCHAR NOT NULL,
     waypoint_ele DECIMAL,
-    image VARCHAR
+    image VARCHAR NOT NULL
   );`);
 
   await db.query(`
