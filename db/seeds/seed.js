@@ -83,7 +83,7 @@ const seed = async ({
 		    VALUES %L RETURNING *;
 		    `,
     formattedParks.map(
-      ({ town_id, park_name, parks_lat, parks_long, amenities }) => [
+      ({ town_id, park_name, parks_lat, parks_long, amenities, image }) => [
         town_id,
         park_name,
         parks_lat,
@@ -106,7 +106,7 @@ const seed = async ({
       VALUES %L RETURNING *;
       `,
     formattedMaps.map(
-      ({ park_id, map_name, length, est_comp_time, age_min }) => [
+      ({ park_id, map_name, length, est_comp_time, age_min, image }) => [
         park_id,
         map_name,
         length,
