@@ -160,3 +160,21 @@ describe('ERROR HANDLING-PATCH /api/user_activity/:user_id', () => {
 			});
 	});
 });
+
+describe('GET api/waypoints/:map_id', () => {
+	test('status:200, responds with way points for map_id', async () => {
+		const res = await request(app).get(`/api/waypoints/1`).expect(200);
+		expect(res.body.maps).toBeInstanceOf(Object);
+		res.body.maps.forEach((map) => {
+			expect(map).toMatchObject({
+				waypoint_id: expect.any(Number),
+				map_id: 1,
+				waypoint_lat: expect.any(Number),
+				waypoint_long: expect.any(Number),
+				waypoint_timestamp: expect.any(String),
+				waypoint_ele: expect.any(Number),
+				image: expect.any(String),
+			});
+		});
+	});
+});
