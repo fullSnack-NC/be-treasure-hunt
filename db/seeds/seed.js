@@ -1,13 +1,13 @@
-const format = require("pg-format");
+const format = require('pg-format');
 const {
   createRef,
   formatParks,
   formatMaps,
   formatWaypoints,
   formatUserActivity,
-} = require("../helpers/utils");
-const db = require("../connection");
-const { dropTables, createTables } = require("../helpers/manage-tables");
+} = require('../helpers/utils');
+const db = require('../connection');
+const { dropTables, createTables } = require('../helpers/manage-tables');
 
 const seed = async ({
   townsData,
@@ -36,7 +36,7 @@ const seed = async ({
     .query(insertUsersQueryStr)
     .then((results) => results.rows);
 
-  const userIdLookup = createRef(usersRows, "username", "user_id");
+  const userIdLookup = createRef(usersRows, 'username', 'user_id');
   const formattedUserActivity = formatUserActivity(
     user_activityData,
     userIdLookup
@@ -74,12 +74,12 @@ const seed = async ({
     return result.rows;
   });
 
-  const townsIdLookup = createRef(townsRows, "town_name", "town_id");
+  const townsIdLookup = createRef(townsRows, 'town_name', 'town_id');
   const formattedParks = formatParks(parksData, townsIdLookup);
 
   const insertParksQueryStr = format(
     `
-		    INSERT INTO parks (town_id, park_name, parks_lat, parks_long, amenities)
+		    INSERT INTO parks (town_id, park_name, parks_lat, parks_long, amenities,image)
 		    VALUES %L RETURNING *;
 		    `,
     formattedParks.map(
@@ -89,6 +89,7 @@ const seed = async ({
         parks_lat,
         parks_long,
         amenities,
+        image,
       ]
     )
   );
@@ -96,12 +97,12 @@ const seed = async ({
     return result.rows;
   });
 
-  const parksIdLookup = createRef(parksRows, "park_name", "park_id");
+  const parksIdLookup = createRef(parksRows, 'park_name', 'park_id');
   const formattedMaps = formatMaps(mapsData, parksIdLookup);
 
   const insertMapsQueryStr = format(
     `
-      INSERT INTO maps (park_id, map_name, length, est_comp_time, age_min)
+      INSERT INTO maps (park_id, map_name, length, est_comp_time, age_min, image)
       VALUES %L RETURNING *;
       `,
     formattedMaps.map(
@@ -111,6 +112,7 @@ const seed = async ({
         length,
         est_comp_time,
         age_min,
+        image,
       ]
     )
   );
@@ -119,7 +121,7 @@ const seed = async ({
     return results.rows;
   });
 
-  const mapsIdLookup = createRef(mapRows, "map_name", "map_id");
+  const mapsIdLookup = createRef(mapRows, 'map_name', 'map_id');
   const formattedWaypoints = formatWaypoints(waypointsData, mapsIdLookup);
 
   const insertWaypointsQueryStr = format(
