@@ -1,4 +1,4 @@
-const db = require("../connection");
+const db = require('../connection');
 
 const createTables = async () => {
   const townsTablePromise = db.query(`
@@ -27,7 +27,8 @@ const createTables = async () => {
     park_name VARCHAR,
     parks_lat DECIMAL,
     parks_long DECIMAL,
-    amenities VARCHAR
+    amenities VARCHAR,
+    image VARCHAR
   );`);
 
   await Promise.all([parksTablePromise]);
@@ -41,7 +42,8 @@ const createTables = async () => {
     map_name VARCHAR NOT NULL,
     length DECIMAL NOT NULL,
     est_comp_time INT NOT NULL,
-    age_min INT NOT NULL
+    age_min INT NOT NULL,
+    image VARCHAR
   );`);
 
   await Promise.all([mapsTablePromise]);
