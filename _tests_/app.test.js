@@ -163,36 +163,3 @@ describe('ERROR HANDLING-PATCH /api/user_activity/:user_id', () => {
       });
   });
 });
-
-describe('GET api/waypoints/:map_id', () => {
-  test('status:200, responds with way points for map_id', async () => {
-    const res = await request(app).get(`/api/waypoints/1`).expect(200);
-    expect(res.body.waypoint).toBeInstanceOf(Object);
-    res.body.waypoint.forEach((map) => {
-      expect(map).toMatchObject({
-        waypoint_id: expect.any(Number),
-        map_id: 1,
-        waypoint_lat: expect.any(String),
-        waypoint_long: expect.any(String),
-        waypoint_timestamp: expect.any(String),
-        waypoint_ele: expect.any(String),
-        image: expect.any(String),
-      });
-    });
-  });
-});
-
-describe('Error Handling for waypoints', () => {
-  test('Returns 400 for bad request', async () => {
-    const res = await request(app).get(`/api/waypoints/villa-park`).expect(400);
-    expect(res.body.msg).toEqual('Bad request');
-  });
-  test('Returns 404 for query param that does not exist', async () => {
-    const res = await request(app).get(`/api/waypoints/1111`).expect(404);
-    expect(res.body.msg).toEqual('Park not found');
-  });
-  test('Returns 404 for bad path', async () => {
-    const res = await request(app).get(`/api/waypoints/`).expect(404);
-    expect(res.body.msg).toEqual('Path not found');
-  });
-});

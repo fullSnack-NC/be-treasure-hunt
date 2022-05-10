@@ -4,7 +4,7 @@ module.exports = [
     waypoint_lat: 53.839142,
     waypoint_long: -1.499168,
     waypoint_timestamp: '2011-02-26T12:31:53Z',
-    waypoint_ele: 118.9,
+    waypoint_ele: 118.8,
     image:
       'https://drive.google.com/file/d/1UhnWJbjXetNdjHz0Y-caOiDS1TXd1t8O/view?usp=sharing',
   },
